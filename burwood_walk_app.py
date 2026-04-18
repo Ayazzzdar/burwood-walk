@@ -164,7 +164,30 @@ st.markdown(f"""
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {{
-        background: linear-gradient(180deg, {card_bg} 0%, {bg_color} 100%);
+        background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    }}
+    
+    [data-testid="stSidebar"] * {{
+        color: white !important;
+    }}
+    
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] .stMarkdown {{
+        color: white !important;
+    }}
+    
+    [data-testid="stSidebar"] input[type="text"] {{
+        background-color: #2a2a2a !important;
+        color: white !important;
+        border: 1px solid #404040 !important;
+    }}
+    
+    [data-testid="stSidebar"] hr {{
+        border-color: #404040 !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -194,6 +217,8 @@ for photo_path in photo_paths:
     try:
         if os.path.exists(photo_path):
             img = Image.open(photo_path)
+            # Rotate image 180 degrees to fix upside-down orientation
+            img = img.rotate(180, expand=True)
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 st.image(img, caption="Can't wait for more moments like this 💕", use_container_width=True)
