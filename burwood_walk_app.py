@@ -26,10 +26,23 @@ text_color = st.sidebar.color_picker("Text Color", "#1a1a1a")
 card_bg = st.sidebar.color_picker("Card Background", "#ffffff")
 
 st.sidebar.markdown("---")
+st.sidebar.title("⏰ Customize Times")
+st.sidebar.markdown("Adjust the times to match your schedule!")
+
+# Time inputs for each stop
+stop1_time = st.sidebar.text_input("Stop 1 - Westfield", "9:00 AM")
+stop2_time = st.sidebar.text_input("Stop 2 - Burwood Park", "9:20 AM - 10:05 AM")
+stop3_time = st.sidebar.text_input("Stop 3 - Walk Down Burwood Rd", "10:10 AM - 10:40 AM")
+stop4_time = st.sidebar.text_input("Stop 4 - Church Street", "10:45 AM")
+stop5_time = st.sidebar.text_input("Stop 5 - Back Up Burwood Rd", "10:55 AM - 11:25 AM")
+stop6_time = st.sidebar.text_input("Stop 6 - Back to Westfield", "11:30 AM")
+
+st.sidebar.markdown("---")
 st.sidebar.markdown("### 💡 Tips")
 st.sidebar.markdown("- Click any color to change it")
 st.sidebar.markdown("- Dark text works best with light backgrounds")
 st.sidebar.markdown("- Try different accent colors for different moods!")
+st.sidebar.markdown("- Change times to match your actual schedule!")
 
 # Custom CSS with dynamic colors
 st.markdown(f"""
@@ -209,42 +222,42 @@ def create_map():
             "lng": 151.1059151,
             "title": "1. Westfield Burwood",
             "desc": "Start here - grab coffee!",
-            "time": "9:00 AM"
+            "time": stop1_time
         },
         {
             "lat": -33.8730145,
             "lng": 151.10293819999998,
             "title": "2. Burwood Park",
             "desc": "Walk through the park together",
-            "time": "9:20 AM - 10:05 AM"
+            "time": stop2_time
         },
         {
             "lat": -33.877,
             "lng": 151.1045,
             "title": "3. Burwood Road Shops",
             "desc": "Browse and explore",
-            "time": "10:10 AM - 10:40 AM"
+            "time": stop3_time
         },
         {
             "lat": -33.8818428,
             "lng": 151.1045158,
             "title": "4. Church Street",
             "desc": "Turnaround point",
-            "time": "10:45 AM"
+            "time": stop4_time
         },
         {
             "lat": -33.877,
             "lng": 151.1055,
             "title": "5. Back Up Burwood Road",
             "desc": "Return journey",
-            "time": "10:55 AM - 11:25 AM"
+            "time": stop5_time
         },
         {
             "lat": -33.8745651,
             "lng": 151.1059151,
             "title": "6. Back to Westfield",
             "desc": "End of our adventure",
-            "time": "11:30 AM"
+            "time": stop6_time
         }
     ]
     
@@ -321,37 +334,37 @@ stops = [
         "number": "1",
         "title": "Start at Westfield",
         "desc": "Park here (3 hours free!) and grab our coffees from one of the cafes inside",
-        "time": "⏰ 9:00 AM"
+        "time": f"⏰ {stop1_time}"
     },
     {
         "number": "2",
         "title": "Burwood Park",
         "desc": "Cross Burwood Road to the park. Let's walk through together with our coffees - duck pond, gardens, and benches everywhere if we want to sit and chat",
-        "time": "⏰ 9:20 AM - 10:05 AM"
+        "time": f"⏰ {stop2_time}"
     },
     {
         "number": "3",
         "title": "Walk Down Burwood Road",
         "desc": "Exit the park and browse the shops - Asian restaurants, bakeries, Korean BBQ, bubble tea, boutiques... Let's explore together",
-        "time": "⏰ 10:10 AM - 10:40 AM"
+        "time": f"⏰ {stop3_time}"
     },
     {
         "number": "4",
         "title": "Church Street (Turnaround)",
         "desc": "We'll walk all the way to Church Street, then turn around and head back",
-        "time": "⏰ 10:45 AM"
+        "time": f"⏰ {stop4_time}"
     },
     {
         "number": "5",
         "title": "Back Up Burwood Road",
         "desc": "Browse the other side of the street on our way back to Westfield",
-        "time": "⏰ 10:55 AM - 11:25 AM"
+        "time": f"⏰ {stop5_time}"
     },
     {
         "number": "6",
         "title": "Return to Westfield",
         "desc": "Back where we started - about 2-2.5 hours of walking, talking, and exploring together",
-        "time": "⏰ 11:30 AM"
+        "time": f"⏰ {stop6_time}"
     }
 ]
 
