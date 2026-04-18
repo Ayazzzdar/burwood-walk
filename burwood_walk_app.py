@@ -18,12 +18,12 @@ st.set_page_config(
 st.sidebar.title("🎨 Customize Colors")
 st.sidebar.markdown("Personalize the app to your liking!")
 
-primary_color = st.sidebar.color_picker("Primary Color (headings & markers)", "#2c5f4f")
-primary_light = st.sidebar.color_picker("Primary Light (gradients)", "#4a9375")
-accent_color = st.sidebar.color_picker("Accent Color (badges & highlights)", "#e8b86d")
-bg_color = st.sidebar.color_picker("Background Color", "#faf9f6")
-text_color = st.sidebar.color_picker("Text Color", "#1a1a1a")
-card_bg = st.sidebar.color_picker("Card Background", "#ffffff")
+primary_color = st.sidebar.color_picker("Primary Color (headings & markers)", "#3ba98c")
+primary_light = st.sidebar.color_picker("Primary Light (gradients)", "#4db69d")
+accent_color = st.sidebar.color_picker("Accent Color (badges & highlights)", "#f4a261")
+bg_color = st.sidebar.color_picker("Background Color", "#1a1a1a")
+text_color = st.sidebar.color_picker("Text Color", "#ffffff")
+card_bg = st.sidebar.color_picker("Card Background", "#3ba98c")
 
 st.sidebar.markdown("---")
 st.sidebar.title("⏰ Customize Times")
@@ -50,7 +50,7 @@ st.markdown(f"""
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
     
     .main {{
-        background: linear-gradient(135deg, {bg_color} 0%, #f0ebe3 100%);
+        background: linear-gradient(135deg, {bg_color} 0%, #0a0a0a 100%);
     }}
     
     h1 {{
