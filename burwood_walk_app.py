@@ -4,120 +4,155 @@ from streamlit_folium import st_folium
 from PIL import Image
 import base64
 from io import BytesIO
+import os
 
 # Page configuration
 st.set_page_config(
     page_title="Our Burwood Adventure 💕",
     page_icon="❤️",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
-# Custom CSS
-st.markdown("""
+# Sidebar for color customization
+st.sidebar.title("🎨 Customize Colors")
+st.sidebar.markdown("Personalize the app to your liking!")
+
+primary_color = st.sidebar.color_picker("Primary Color (headings & markers)", "#2c5f4f")
+primary_light = st.sidebar.color_picker("Primary Light (gradients)", "#4a9375")
+accent_color = st.sidebar.color_picker("Accent Color (badges & highlights)", "#e8b86d")
+bg_color = st.sidebar.color_picker("Background Color", "#faf9f6")
+text_color = st.sidebar.color_picker("Text Color", "#1a1a1a")
+card_bg = st.sidebar.color_picker("Card Background", "#ffffff")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 💡 Tips")
+st.sidebar.markdown("- Click any color to change it")
+st.sidebar.markdown("- Dark text works best with light backgrounds")
+st.sidebar.markdown("- Try different accent colors for different moods!")
+
+# Custom CSS with dynamic colors
+st.markdown(f"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
     
-    .main {
-        background: linear-gradient(135deg, #faf9f6 0%, #f0ebe3 100%);
-    }
+    .main {{
+        background: linear-gradient(135deg, {bg_color} 0%, #f0ebe3 100%);
+    }}
     
-    h1 {
+    h1 {{
         font-family: 'Playfair Display', serif;
-        color: #2c5f4f;
+        color: {primary_color};
         text-align: center;
         font-size: 3rem;
         margin-bottom: 0.5rem;
         animation: fadeIn 1s ease-out;
-    }
+    }}
     
-    .subtitle {
+    .subtitle {{
         text-align: center;
-        color: #2c5f4f;
-        opacity: 0.8;
+        color: {primary_color};
+        opacity: 0.9;
         font-size: 1.2rem;
         margin-bottom: 2rem;
         font-family: 'Inter', sans-serif;
-    }
+        font-weight: 500;
+    }}
     
-    .intro-text {
+    .intro-text {{
         text-align: center;
-        font-size: 1.1rem;
-        color: #2d2d2d;
+        font-size: 1.15rem;
+        color: {text_color};
         margin: 2rem auto;
         max-width: 600px;
         line-height: 1.8;
-    }
+        font-weight: 500;
+    }}
     
-    .stop-card {
-        background: white;
+    .stop-card {{
+        background: {card_bg};
         padding: 1.5rem;
         border-radius: 12px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        border-left: 5px solid #e8b86d;
+        border-left: 5px solid {accent_color};
         margin-bottom: 1.5rem;
         transition: transform 0.3s ease;
-    }
+    }}
     
-    .stop-card:hover {
+    .stop-card:hover {{
         transform: translateX(8px);
-        border-left-color: #2c5f4f;
-    }
+        border-left-color: {primary_color};
+    }}
     
-    .stop-number {
+    .stop-number {{
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 36px;
         height: 36px;
-        background: linear-gradient(135deg, #2c5f4f, #4a9375);
+        background: linear-gradient(135deg, {primary_color}, {primary_light});
         color: white;
         border-radius: 50%;
         font-weight: 600;
         margin-right: 1rem;
         font-size: 1.1rem;
         box-shadow: 0 4px 12px rgba(44, 95, 79, 0.3);
-    }
+    }}
     
-    .stop-title {
+    .stop-title {{
         font-family: 'Playfair Display', serif;
-        color: #2c5f4f;
+        color: {primary_color};
         font-size: 1.4rem;
         font-weight: 600;
         margin: 0;
-    }
+    }}
     
-    .time-badge {
+    .stop-desc {{
+        margin: 0.5rem 0;
+        color: {text_color};
+        opacity: 1;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
+    }}
+    
+    .time-badge {{
         display: inline-block;
-        background: #e8b86d;
+        background: {accent_color};
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         font-size: 0.85rem;
-        font-weight: 500;
-        color: #2d2d2d;
+        font-weight: 600;
+        color: {text_color};
         margin-top: 0.5rem;
-    }
+    }}
     
-    .footer-text {
+    .footer-text {{
         text-align: center;
         font-family: 'Playfair Display', serif;
         font-size: 1.5rem;
-        color: #2c5f4f;
+        color: {primary_color};
         font-style: italic;
         margin-top: 3rem;
         padding: 2rem;
-        border-top: 2px solid #e8b86d;
-    }
+        border-top: 2px solid {accent_color};
+        font-weight: 600;
+    }}
     
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn {{
+        from {{ opacity: 0; transform: translateY(20px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
     
-    .stImage {
+    .stImage {{
         border-radius: 16px;
         box-shadow: 0 8px 32px rgba(44, 95, 79, 0.15);
-    }
+    }}
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {{
+        background: linear-gradient(180deg, {card_bg} 0%, {bg_color} 100%);
+    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -134,17 +169,31 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load and display the photo
-try:
-    img = Image.open('/mnt/user-data/uploads/IMG_7850.JPG')
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.image(img, caption="Can't wait for more moments like this 💕", use_container_width=True)
-except:
-    st.warning("Photo not found - make sure IMG_7850.JPG is in the correct directory")
+photo_paths = [
+    'IMG_7850.JPG',
+    './IMG_7850.JPG',
+    '/mnt/user-data/uploads/IMG_7850.JPG',
+    os.path.join(os.path.dirname(__file__), 'IMG_7850.JPG')
+]
+
+photo_loaded = False
+for photo_path in photo_paths:
+    try:
+        if os.path.exists(photo_path):
+            img = Image.open(photo_path)
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.image(img, caption="Can't wait for more moments like this 💕", use_container_width=True)
+            photo_loaded = True
+            break
+    except Exception as e:
+        continue
+
+if not photo_loaded:
+    st.info("💡 Upload your photo as 'IMG_7850.JPG' in the same folder as this app!")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Create the map
 def create_map():
     # Center on Burwood
     m = folium.Map(
@@ -205,15 +254,15 @@ def create_map():
             location=[point["lat"], point["lng"]],
             popup=folium.Popup(f"""
                 <div style='font-family: Inter, sans-serif; min-width: 200px;'>
-                    <h4 style='color: #2c5f4f; margin-bottom: 0.5rem;'>{point['title']}</h4>
-                    <p style='margin: 0.5rem 0;'>{point['desc']}</p>
-                    <p style='margin: 0; color: #e8b86d; font-weight: 600;'>⏰ {point['time']}</p>
+                    <h4 style='color: {primary_color}; margin-bottom: 0.5rem;'>{point['title']}</h4>
+                    <p style='margin: 0.5rem 0; color: {text_color};'>{point['desc']}</p>
+                    <p style='margin: 0; color: {accent_color}; font-weight: 600;'>⏰ {point['time']}</p>
                 </div>
             """, max_width=300),
             tooltip=point["title"],
             icon=folium.DivIcon(html=f"""
                 <div style='
-                    background: linear-gradient(135deg, #2c5f4f, #4a9375);
+                    background: linear-gradient(135deg, {primary_color}, {primary_light});
                     width: 36px;
                     height: 36px;
                     border-radius: 50%;
@@ -234,7 +283,7 @@ def create_map():
     route_coords = [[p["lat"], p["lng"]] for p in route_points]
     folium.PolyLine(
         route_coords,
-        color='#4a9375',
+        color=primary_light,
         weight=4,
         opacity=0.7,
         dash_array='10, 10'
@@ -313,7 +362,7 @@ for stop in stops:
             <span class='stop-number'>{stop['number']}</span>
             <h3 class='stop-title'>{stop['title']}</h3>
         </div>
-        <p style='margin: 0.5rem 0; color: #2d2d2d; opacity: 0.85;'>{stop['desc']}</p>
+        <p class='stop-desc'>{stop['desc']}</p>
         <span class='time-badge'>{stop['time']}</span>
     </div>
     """, unsafe_allow_html=True)
